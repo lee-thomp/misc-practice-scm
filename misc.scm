@@ -130,19 +130,31 @@
 	(integer? (/ x y))))
 
 
-; check if a number is prime
-(define prime?
+; check if a number isn't prime - returns either #f or smallest factor
+(define not-prime?
   (lambda (x)
 	
 	; count up through possible factors
-	(define prime-iter
+	(define not-prime-iter
 	  (lambda (y)
-		(cond ((= x y) #t)
+		(cond ((= x y) #f)
 			  ((factor? x y) y)
-			  (else (prime-iter (+ y 1))))))
+			  (else (not-prime-iter (+ y 1))))))
 
 	(if (= x 1) #f
-		(prime-iter 2))))
+		(not-prime-iter 2))))
+
+; define number as list of prime factors
+(define prime-factor
+  (lambda (x)
+
+	(define prime-factor-iter
+	  (lambda (y)
+		(if (not-prime? y) (cons (not-prime? y) (prime-factor-iter (/ y (not-prime? y))))
+			(list y))))
+
+	(if (= x 0) #f
+		(prime-factor-iter x))))
 
 
 ; print all list elements on newlines
