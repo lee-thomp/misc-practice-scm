@@ -26,6 +26,24 @@
 	(average-iter x 0 0)))
 
 
+; MATLAB-style element-wise operators
+(define .+
+  (lambda (lst x)
+	(map (lambda (a) (+ a x)) lst)))
+
+(define .-
+  (lambda (lst x)
+	(map (lambda (a) (- a x)) lst)))
+
+(define .*
+  (lambda (lst x)
+	(map (lambda (a) (* a x)) lst)))
+
+(define ./
+  (lambda (lst x)
+	(map (lambda (a) (/ a x)) lst)))
+
+
 ; right fold procedure
 (define foldr
   (lambda (f init lst)
@@ -161,3 +179,24 @@
 (define print-list
   (lambda (lst)
 	(map (lambda (x) (map display (list x "\n")) 0) lst)))
+
+; compute factorial of number (linear recursive)
+(define factorial
+  (lambda (x)
+	(if (= x 0) 1
+	  	(* x (factorial (- x 1))))))
+
+; compute factorial of number (linear iterative)
+(define factorial
+  (lambda (x)
+
+	; iterative child process
+	(define factorial-iter
+	  (lambda (product counter)
+		(if (> counter x) product
+		  	(factorial-iter (* counter product)
+							(+ counter 1)))))
+
+
+	; wrap
+	(factorial-iter 1 1)))
