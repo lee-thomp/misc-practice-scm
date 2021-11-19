@@ -102,6 +102,30 @@
 	; call iterator proc
 	(range-iter 0)))
 
+
+; element-wise addition (adds y to all elements in list lst)
+(define .+
+  (lambda (lst y)
+	(map (lambda (a) (+ a y)) lst)))
+
+
+; element-wise subtraction (minuses y from all elements in list lst)
+(define .-
+  (lambda (lst y)
+	(map (lambda (a) (- a y)) lst)))
+
+
+; element-wise multiplication (all elements in list lst by y)
+(define .*
+  (lambda (lst y)
+	(map (lambda (a) (* a y)) lst)))
+
+
+; element-wise division (divideds all elements in list lst by y)
+(define ./
+  (lambda (lst y)
+	(map (lambda (a) (/ a y)) lst)))
+
 	
 ; interleave two lists, (interleave A B) -> (A1 B1 A2 B2 ... )
 (define interleave
@@ -141,8 +165,10 @@
 			  ((factor? x y) y)
 			  (else (not-prime-iter (+ y 1))))))
 
-	(if (= x 1) #f
+	; initial check x isn't 1, 0, or negative (need to investigate negative primes)
+	(if (< x 2) #f	
 		(not-prime-iter 2))))
+
 
 ; define number as list of prime factors
 (define prime-factor
@@ -157,7 +183,7 @@
 		(prime-factor-iter x))))
 
 
-; print all list elements on newlines
+; print all list elements on newlines, dumps 0 to function return
 (define print-list
   (lambda (lst)
 	(map (lambda (x) (map display (list x "\n")) 0) lst)))
